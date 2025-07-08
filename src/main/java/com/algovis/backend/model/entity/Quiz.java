@@ -1,4 +1,4 @@
-package com.algovis.backend.model;
+package com.algovis.backend.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -16,7 +16,7 @@ public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "algorithm_id", nullable = false)
     private Algorithm algorithm;
     private String question;
