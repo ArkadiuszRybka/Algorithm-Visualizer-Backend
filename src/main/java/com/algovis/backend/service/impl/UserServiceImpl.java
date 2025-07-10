@@ -1,6 +1,7 @@
 package com.algovis.backend.service.impl;
 
 import com.algovis.backend.mapper.impl.UserMapper;
+import com.algovis.backend.model.dto.ChangePasswordRequest;
 import com.algovis.backend.model.dto.RegisterRequest;
 import com.algovis.backend.model.dto.UserDto;
 import com.algovis.backend.model.entity.User;
@@ -8,8 +9,6 @@ import com.algovis.backend.repository.UserRepository;
 import com.algovis.backend.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,12 +24,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto register(RegisterRequest request) {
-        // Sprawdzenie czy istnieje email
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new RuntimeException("User with this email already exists");
         }
 
-        // Tworzenie nowego usera
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
@@ -39,5 +36,25 @@ public class UserServiceImpl implements UserService {
         User savedUser = userRepository.save(user);
 
         return userMapper.mapTo(savedUser);
+    }
+
+    @Override
+    public void deleteUserByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        userRepository.delete(user);
+    }
+
+    @Override
+    public void changePasswordByEmail(String email, ChangePasswordRequest request) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if(!passwordEncoder.matches(request.getOldPassword(), user.getPassword())){
+            throw new RuntimeException("Old password does not match");
+        }
+
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
     }
 }
