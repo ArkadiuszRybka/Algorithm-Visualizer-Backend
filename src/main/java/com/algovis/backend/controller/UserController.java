@@ -13,18 +13,25 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @DeleteMapping("/api/user")
+    @DeleteMapping("/user")
     public ResponseEntity deleteUser(Authentication authentication) {
         String email = authentication.getName();
         userService.deleteUserByEmail(email);
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/api/user/password")
+    @PatchMapping("/user")
     public ResponseEntity<?> changePassword(Authentication authentication, @RequestBody ChangePasswordRequest request){
         String email = authentication.getName();
         userService.changePasswordByEmail(email, request);
         return ResponseEntity.ok().build();
 
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<UserDto> getProfile(Authentication authentication){
+        String email = authentication.getName();
+        UserDto userDto = userService.getProfile(email);
+        return ResponseEntity.ok(userDto);
     }
 }

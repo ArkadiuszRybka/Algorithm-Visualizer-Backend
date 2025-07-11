@@ -12,4 +12,5 @@ public interface UserService {
     UserDto register(RegisterRequest request);
     void deleteUserByEmail(String email);
     void changePasswordByEmail(String email, ChangePasswordRequest request);
+    UserDto getProfile(String email);
 }
