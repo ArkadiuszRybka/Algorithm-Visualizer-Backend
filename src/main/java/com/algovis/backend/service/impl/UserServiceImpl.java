@@ -9,6 +9,9 @@ import com.algovis.backend.repository.UserRepository;
 import com.algovis.backend.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.ResponseStatusException;
+import static org.springframework.http.HttpStatus.CONFLICT;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,7 +28,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto register(RegisterRequest request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("User with this email already exists");
+            throw new ResponseStatusException(CONFLICT, "User with this email already exists");
         }
 
         User user = new User();
