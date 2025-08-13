@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,13 +17,26 @@ public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "algorithm_id", nullable = false)
+    @ToString.Exclude
     private Algorithm algorithm;
+
+    @Column(nullable = false, length = 255)
     private String question;
-    @ElementCollection
-    @CollectionTable(name = "quiz_answers", joinColumns = @JoinColumn(name = "quiz_id"))
-    @Column(name = "answer")
-    private List<String> answers;
-    private int correctAnswerIndex;
+
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<QuizAnswer> answers = new ArrayList<>();
+
+    public void addAnswer(QuizAnswer answer) {
+        answers.add(answer);
+        answer.setQuiz(this);
+    }
+
+    public void removeAnswer(QuizAnswer answer) {
+        answers.remove(answer);
+        answer.setQuiz(null);
+    }
 }
