@@ -12,15 +12,17 @@ import lombok.ToString;
 @Table(name = "user_progress")
 public class UserProgress {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", nullable = false)
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "algorithm_id", nullable = false)
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "algorithm_id")
     private Algorithm algorithm;
-    @Column(name = "progress_status")
-    private String progressStatus;
+
+    @Column(name = "progress_status", nullable = false, length = 255)
+    private String progressStatus; // "IN_PROGRESS" / "COMPLETED"
 }

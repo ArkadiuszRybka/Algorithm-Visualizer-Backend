@@ -3,13 +3,13 @@ package com.algovis.backend.controller;
 import com.algovis.backend.mapper.impl.QuizMapper;
 import com.algovis.backend.model.dto.QuizAnswerDto;
 import com.algovis.backend.model.dto.QuizQuestionDto;
+import com.algovis.backend.model.dto.QuizResultDto;
+import com.algovis.backend.model.dto.request.QuizSubmitRequst;
 import com.algovis.backend.model.entity.Quiz;
 import com.algovis.backend.service.QuizService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,4 +32,12 @@ public class QuizController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(dto);
     }
+
+    @PostMapping("/quiz/{algorithmId}/submit")
+    public ResponseEntity<QuizResultDto> submitQuiz(@PathVariable Long algorithmId, @RequestBody QuizSubmitRequst requst, Authentication authentication){
+        String email = authentication.getName();
+        QuizResultDto result = quizService.evaluateAndSaveResult(algorithmId, email, requst);
+        return ResponseEntity.ok(result);
+    }
+
 }

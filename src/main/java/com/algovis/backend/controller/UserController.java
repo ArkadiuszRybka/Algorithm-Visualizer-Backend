@@ -1,6 +1,6 @@
 package com.algovis.backend.controller;
 
-import com.algovis.backend.model.dto.ChangePasswordRequest;
+import com.algovis.backend.model.dto.request.ChangePasswordRequest;
 import com.algovis.backend.model.dto.UserDto;
 import com.algovis.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

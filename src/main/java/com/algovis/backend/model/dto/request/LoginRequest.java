@@ -1,4 +1,4 @@
-package com.algovis.backend.model.dto;
+package com.algovis.backend.model.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

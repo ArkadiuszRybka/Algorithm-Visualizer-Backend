@@ -1,8 +1,8 @@
 package com.algovis.backend.controller;
 
 import com.algovis.backend.model.dto.AuthResponse;
-import com.algovis.backend.model.dto.LoginRequest;
-import com.algovis.backend.model.dto.RegisterRequest;
+import com.algovis.backend.model.dto.request.LoginRequest;
+import com.algovis.backend.model.dto.request.RegisterRequest;
 import com.algovis.backend.model.dto.UserDto;
 import com.algovis.backend.service.CustomUserDetailsService;
 import com.algovis.backend.service.JwtUtil;

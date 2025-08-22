@@ -7,9 +7,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserProgressRepository extends CrudRepository<UserProgress, Long> {
     @Query("select up from UserProgress up where up.user.id = :userId")
     List<UserProgress> findAllByUserId(@Param("userId") Long userId);
+    Optional<UserProgress> findByUserIdAndAlgorithmId(Long userId, Long algorithmId);
 }
