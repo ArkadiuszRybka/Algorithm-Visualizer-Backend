@@ -4,7 +4,7 @@ import com.algovis.backend.mapper.impl.QuizMapper;
 import com.algovis.backend.model.dto.QuizAnswerDto;
 import com.algovis.backend.model.dto.QuizQuestionDto;
 import com.algovis.backend.model.dto.QuizResultDto;
-import com.algovis.backend.model.dto.request.QuizSubmitRequst;
+import com.algovis.backend.model.dto.request.QuizSubmitRequest;
 import com.algovis.backend.model.entity.Quiz;
 import com.algovis.backend.service.QuizService;
 import org.springframework.http.ResponseEntity;
@@ -34,9 +34,9 @@ public class QuizController {
     }
 
     @PostMapping("/quiz/{algorithmId}/submit")
-    public ResponseEntity<QuizResultDto> submitQuiz(@PathVariable Long algorithmId, @RequestBody QuizSubmitRequst requst, Authentication authentication){
+    public ResponseEntity<QuizResultDto> submitQuiz(@PathVariable Long algorithmId, @RequestBody QuizSubmitRequest request, Authentication authentication){
         String email = authentication.getName();
-        QuizResultDto result = quizService.evaluateAndSaveResult(algorithmId, email, requst);
+        QuizResultDto result = quizService.evaluateAndSaveResult(algorithmId, email, request);
         return ResponseEntity.ok(result);
     }
 

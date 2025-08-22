@@ -6,6 +6,6 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class QuizSubmitRequst {
+public class QuizSubmitRequest {
     private List<QuizSelectionDto> answers;
 }

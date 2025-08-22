@@ -9,7 +9,10 @@ import lombok.ToString;
 @Entity
 @Getter @Setter @ToString
 @NoArgsConstructor
-@Table(name = "user_progress")
+@Table(
+        name = "user_progress",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id","algorithm_id"})
+)
 public class UserProgress {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
