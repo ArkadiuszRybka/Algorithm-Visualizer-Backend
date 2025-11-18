@@ -51,7 +51,7 @@ The architecture is modular and prepared for **easy future expansion**.
 
 1. **Clone the repository:**
 ```bash
-git clone https://github.com/your-repo/algorithm-visualizer-backend.git
+git clone https://github.com/ArkadiuszRybka/Algorithm-Visualizer-Backend.git
 cd algorithm-visualizer-backend
 ```
 
@@ -62,6 +62,7 @@ POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 POSTGRES_DB=visualizer
 ```
+
 3. **Start the services:**
 ```bash
 docker-compose up --build -d
